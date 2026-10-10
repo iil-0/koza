@@ -1,0 +1,63 @@
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.brand-mark {
+  flex: none;
+  overflow: visible;
+  transition: transform 0.4s var(--spring);
+}
+
+.brand:hover .brand-mark {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+.brand-mark-bg { fill: var(--accent-soft); }
+.brand-mark-twig { fill: none; stroke: var(--c-sage-ink); stroke-width: 2; stroke-linecap: round; }
+.brand-mark-leaf { fill: var(--c-sage); }
+.brand-mark-thread { fill: none; stroke: var(--text-3); stroke-width: 1; stroke-linecap: round; }
+.brand-mark-cocoon { fill: var(--accent); }
+.brand-mark-silk { fill: none; stroke: var(--surface); stroke-width: 1.1; stroke-linecap: round; opacity: 0.55; }
+.brand-mark-wing-a { fill: var(--c-yellow); }
+.brand-mark-wing-b { fill: var(--c-lavender); }
+.brand-mark-body { fill: none; stroke: var(--text); stroke-width: 1; stroke-linecap: round; }
+
+.brand-mark-wings {
+  transform-box: view-box;
+  transform-origin: 30px 25px;
+}
+
+.brand:hover .brand-mark-wings {
+  animation: brand-flutter 0.5s ease-in-out 2;
+}
+
+@keyframes brand-flutter {
+  50% { transform: scaleX(0.55); }
+}
+
+.brand-text {
+  display: grid;
+  line-height: 1;
+  min-width: 0;
+}
+
+.brand-name {
+  font-size: 1.62rem;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  color: var(--text);
+}
+
+.brand-tag {
+  margin-top: 3px;
+  font-size: 0.98rem;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.brand--compact .brand-name {
+  font-size: 1.32rem;
+}

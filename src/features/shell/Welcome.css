@@ -1,0 +1,60 @@
+.wl {
+  display: grid;
+  gap: 16px;
+}
+
+.wl-hero {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding-top: 4px;
+}
+
+.wl-hello {
+  font-size: 1.6rem;
+  color: var(--accent-ink);
+}
+
+.wl-locate {
+  justify-self: start;
+}
+
+.wl-locate:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.wl-spin {
+  animation: wl-spin 0.9s linear infinite;
+}
+
+.wl-status {
+  font-size: 0.82rem;
+  color: var(--success);
+}
+
+.wl-status.is-error {
+  color: var(--accent-ink);
+}
+
+.wl-privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  font-size: 0.8rem;
+  color: var(--text-2);
+}
+
+.wl-privacy svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+@keyframes wl-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

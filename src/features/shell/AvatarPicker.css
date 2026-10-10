@@ -1,0 +1,60 @@
+.ap-avatars {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.ap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  gap: 6px;
+}
+
+.ap-option {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 7px 2px 6px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid transparent;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.25s var(--spring);
+}
+
+.ap-option:hover {
+  background: var(--surface-2);
+}
+
+.ap-option:active {
+  transform: scale(0.94);
+}
+
+.ap-option .bear-avatar {
+  border-radius: 50%;
+  transition: transform 0.3s var(--spring), box-shadow 0.2s;
+}
+
+.ap-option:hover .bear-avatar {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+.ap-option[aria-checked='true'] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.ap-option[aria-checked='true'] .bear-avatar {
+  box-shadow: 0 0 0 2.5px var(--surface), 0 0 0 4.5px var(--accent);
+}
+
+.ap-name {
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: var(--text-2);
+}
+
+.ap-option[aria-checked='true'] .ap-name {
+  color: var(--accent-ink);
+}
