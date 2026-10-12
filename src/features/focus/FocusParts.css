@@ -1,0 +1,421 @@
+/* ---------- mode pills (segmented) ---------- */
+.fw-pills {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.fw-pill {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: var(--r-pill);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-2);
+  white-space: nowrap;
+  transition: background-color 0.25s var(--ease), color 0.25s, box-shadow 0.25s, transform 0.2s var(--spring);
+}
+
+.fw-pill:hover {
+  color: var(--text);
+  background: var(--surface-3);
+}
+
+.fw-pill:active {
+  transform: scale(0.95);
+}
+
+.fw-pill[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--ink-text);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- duration chips ---------- */
+.fw-durs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.fw-dur {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 11px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border-strong);
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: var(--text-2);
+  white-space: nowrap;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s var(--spring);
+}
+
+.fw-dur:hover:not(:disabled) {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.fw-dur:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.fw-dur[aria-pressed='true'] {
+  background: var(--accent-soft);
+  border-color: transparent;
+  color: var(--accent-ink);
+}
+
+.fw-dur:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.fw-dur-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
+  padding: 0 3px 0 10px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--accent);
+  background: var(--surface);
+  box-shadow: var(--ring);
+}
+
+.fw-dur-input {
+  width: 3.2em;
+  border: 0;
+  background: transparent;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text);
+  -moz-appearance: textfield;
+}
+
+.fw-dur-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.fw-dur-input::-webkit-inner-spin-button,
+.fw-dur-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.fw-dur-unit {
+  font-size: 0.74rem;
+  color: var(--text-3);
+}
+
+.fw-dur-ok {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ---------- ring ---------- */
+.fw-ring {
+  --arc-a: var(--accent);
+  --arc-b: var(--c-peach);
+  --arc-track: var(--accent-soft);
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  width: 100%;
+  isolation: isolate;
+  container-type: inline-size;
+}
+
+.fw-ring[data-mode='short'] {
+  --arc-a: var(--c-sage);
+  --arc-b: var(--c-blue);
+  --arc-track: var(--c-sage-soft);
+}
+
+.fw-ring[data-mode='long'] {
+  --arc-a: var(--c-lavender);
+  --arc-b: var(--c-pink);
+  --arc-track: var(--c-lavender-soft);
+}
+
+/* soft halo behind the ring */
+.fw-ring::before {
+  content: '';
+  position: absolute;
+  inset: 10%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--arc-a) 22%, transparent) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+
+.fw-ring[data-running]::before {
+  opacity: 1;
+  animation: fw-breathe 4s ease-in-out infinite;
+}
+
+.fw-ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.fw-ring-track {
+  fill: none;
+  stroke: var(--arc-track);
+  transition: stroke 0.5s var(--ease);
+}
+
+.fw-ring-arc {
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.35s linear;
+}
+
+.fw-ring[data-running] .fw-ring-arc {
+  animation: fw-glow 2.8s ease-in-out infinite;
+}
+
+.fw-ring-knob {
+  fill: var(--surface);
+  transition: cx 0.35s linear, cy 0.35s linear;
+}
+
+.fw-ring-center {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+@keyframes fw-breathe {
+  0%, 100% { transform: scale(0.92); opacity: 0.7; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes fw-glow {
+  0%, 100% { filter: drop-shadow(0 0 2px color-mix(in srgb, var(--arc-a) 30%, transparent)); }
+  50% { filter: drop-shadow(0 0 9px color-mix(in srgb, var(--arc-a) 65%, transparent)); }
+}
+
+/* ---------- cycle dots ---------- */
+.fw-cycle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: clamp(0.62rem, 6.2cqi, 0.8rem);
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.fw-cycle-dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.fw-cycle-dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--text-3) 35%, transparent);
+  transition: background-color 0.3s;
+}
+
+.fw-cycle-dots i.is-done {
+  background: var(--accent);
+}
+
+.fw-cycle-dots i.is-now {
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+
+/* ---------- controls ---------- */
+.fw-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.fw-main-btn {
+  min-width: 140px;
+  height: 44px;
+  font-size: 0.95rem;
+}
+
+.fw-controls--lg .fw-main-btn {
+  min-width: 170px;
+  height: 52px;
+  font-size: 1.02rem;
+}
+
+.fw-side-btn {
+  border-radius: 50%;
+  background: var(--surface-2);
+}
+
+.fw-controls--lg .fw-side-btn {
+  width: 44px;
+  height: 44px;
+}
+
+.fw-side-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ---------- settings modal ---------- */
+.fw-settings {
+  display: grid;
+  gap: 14px;
+}
+
+.fw-durations {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.fw-durations legend {
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.fw-mini-label {
+  font-size: 0.76rem;
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+.fw-setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  cursor: pointer;
+}
+
+.fw-setting-row > span:first-child,
+.fw-setting-row > label {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.fw-setting-row strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.fw-setting-row small {
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+
+.fw-perm {
+  cursor: default;
+}
+
+.fw-row-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+
+.fw-num-sm {
+  width: 72px;
+  flex: none;
+  text-align: center;
+}
+
+.fw-switch {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 26px;
+  margin: 0;
+  border-radius: var(--r-pill);
+  background: var(--surface-3);
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease);
+}
+
+.fw-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--spring);
+}
+
+.fw-switch:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.fw-switch:checked::after {
+  transform: translateX(18px);
+}
+
+@media (max-width: 420px) {
+  .fw-pill {
+    padding: 0 10px;
+    font-size: 0.8rem;
+  }
+
+  .fw-durations {
+    gap: 8px;
+  }
+}
+
+.fw-durs--compact {
+  gap: 4px;
+}
+
+.fw-durs--compact .fw-dur {
+  min-width: 30px;
+  justify-content: center;
+  padding: 0 8px;
+}
