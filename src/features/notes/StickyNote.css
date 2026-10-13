@@ -1,0 +1,209 @@
+/* ---------- shared paper sticky note ---------- */
+.sticky {
+  --paper: var(--tone-paper, var(--paper-yellow));
+  --paper-shade: color-mix(in srgb, var(--paper) 88%, var(--paper-ink));
+  --fold: 16px;
+  position: relative;
+  min-width: 0;
+  color: var(--paper-ink);
+  /* corner cut for the folded edge + soft light falloff */
+  background: linear-gradient(
+    -45deg,
+    transparent calc(var(--fold) * 0.72),
+    var(--paper-shade) calc(var(--fold) * 0.72),
+    var(--paper) 45%
+  );
+  border-radius: 3px 3px 4px 4px;
+  filter: drop-shadow(0 1px 1px rgba(60, 35, 20, 0.12)) drop-shadow(0 8px 12px rgba(60, 35, 20, 0.1));
+  transform: rotate(var(--rot, 0deg));
+  transform-origin: 50% 0;
+  transition: transform 0.35s var(--spring), filter 0.35s var(--ease);
+}
+
+:root[data-theme='dark'] .sticky {
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35)) drop-shadow(0 10px 14px rgba(0, 0, 0, 0.35));
+}
+
+.sticky:hover,
+.sticky:focus-within {
+  transform: rotate(0deg) translateY(-4px) scale(1.02);
+  filter: drop-shadow(0 2px 2px rgba(60, 35, 20, 0.12)) drop-shadow(0 16px 20px rgba(60, 35, 20, 0.16));
+  z-index: 2;
+}
+
+:root[data-theme='dark'] .sticky:hover,
+:root[data-theme='dark'] .sticky:focus-within {
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.4)) drop-shadow(0 18px 22px rgba(0, 0, 0, 0.45));
+}
+
+/* folded corner */
+.sticky::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: var(--fold);
+  height: var(--fold);
+  border-radius: 0 0 4px 0;
+  background: linear-gradient(
+    to top left,
+    transparent 50%,
+    color-mix(in srgb, var(--paper) 72%, var(--paper-ink)) 50%
+  );
+  pointer-events: none;
+}
+
+/* washi tape */
+.sticky-tape {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 54px;
+  height: 18px;
+  margin-left: -27px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 6px,
+      color-mix(in srgb, var(--tone, var(--accent)) 18%, transparent) 6px 9px
+    ),
+    color-mix(in srgb, var(--surface) 62%, transparent);
+  border-left: 2px dotted color-mix(in srgb, var(--surface) 70%, transparent);
+  border-right: 2px dotted color-mix(in srgb, var(--surface) 70%, transparent);
+  transform: rotate(var(--tape-rot, -4deg));
+  box-shadow: 0 1px 2px rgba(60, 35, 20, 0.08);
+  pointer-events: none;
+}
+
+/* push pin for pinned notes */
+.sticky-pin {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    color-mix(in srgb, var(--accent) 45%, var(--surface)) 0 22%,
+    var(--accent) 55%,
+    var(--accent-ink) 100%
+  );
+  box-shadow: 1px 3px 3px rgba(60, 35, 20, 0.25);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sticky-hit {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  width: 100%;
+  min-height: 100%;
+  padding: 18px 16px 34px;
+  text-align: left;
+  color: inherit;
+  font-family: var(--font-hand);
+  border-radius: inherit;
+}
+
+.sticky-hit:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--paper-ink) 40%, transparent);
+}
+
+.sticky-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.sticky-body {
+  display: grid;
+  font-size: 1.2rem;
+  line-height: 1.25;
+  opacity: 0.88;
+  overflow-wrap: anywhere;
+}
+
+/* safety cap for long wrapped lines (line count is trimmed in JS) */
+.sticky-body.is-clamped {
+  max-height: calc(var(--lines) * 1.25em + 0.6em);
+  overflow: hidden;
+}
+
+.sticky-line.is-item {
+  position: relative;
+  padding-left: 0.85em;
+}
+
+.sticky-line.is-item::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  opacity: 0.7;
+}
+
+.sticky-doodle {
+  position: absolute;
+  right: 22px;
+  bottom: 10px;
+  color: color-mix(in srgb, var(--paper-ink) 70%, var(--tone, var(--paper-ink)));
+  opacity: 0.75;
+  transform: rotate(-8deg);
+  transition: transform 0.4s var(--spring);
+  pointer-events: none;
+}
+
+.sticky:hover .sticky-doodle {
+  transform: rotate(6deg) scale(1.12);
+}
+
+.sticky-pin-btn {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: var(--paper-ink);
+  opacity: 0;
+  transition: opacity 0.2s, background-color 0.2s;
+}
+
+.sticky-pin-btn:hover {
+  background: color-mix(in srgb, var(--paper-ink) 10%, transparent);
+}
+
+.sticky:hover .sticky-pin-btn,
+.sticky:focus-within .sticky-pin-btn,
+.sticky.is-pinned .sticky-pin-btn {
+  opacity: 0.8;
+}
+
+@media (hover: none) {
+  .sticky-pin-btn { opacity: 0.7; }
+}
+
+/* small (dashboard) */
+.sticky--sm .sticky-hit {
+  padding: 16px 13px 32px;
+}
+
+.sticky--sm .sticky-title {
+  font-size: 1.28rem;
+}
+
+.sticky--sm .sticky-body {
+  font-size: 1.06rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticky:hover,
+  .sticky:focus-within {
+    transform: rotate(var(--rot, 0deg));
+  }
+}

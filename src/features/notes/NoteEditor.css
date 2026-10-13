@@ -1,0 +1,132 @@
+/* ---------- note editor (inside shared Modal) ---------- */
+.ne-paper {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: 16px 18px 12px;
+  border-radius: 6px;
+  color: var(--paper-ink);
+  background: var(--tone-paper);
+  box-shadow: var(--shadow-sm), inset 0 -18px 30px -24px color-mix(in srgb, var(--paper-ink) 25%, transparent);
+  transition: background-color 0.3s var(--ease);
+}
+
+.ne-title,
+.ne-body {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--paper-ink);
+  font-family: var(--font-hand);
+  outline: none;
+}
+
+.ne-title {
+  height: 2.9rem;
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.ne-body {
+  /* ruled paper that scrolls with the text */
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 calc(1.9rem - 1px),
+    color-mix(in srgb, var(--paper-ink) 12%, transparent) calc(1.9rem - 1px) 1.9rem
+  );
+  background-attachment: local;
+  padding: 0;
+  resize: vertical;
+  min-height: 8rem;
+  font-size: 1.32rem;
+  line-height: 1.9rem;
+}
+
+.ne-title::placeholder,
+.ne-body::placeholder {
+  color: color-mix(in srgb, var(--paper-ink) 45%, transparent);
+}
+
+.ne-title:focus-visible,
+.ne-body:focus-visible {
+  box-shadow: none;
+}
+
+.ne-paper:focus-within {
+  box-shadow: var(--shadow-sm), 0 0 0 3px color-mix(in srgb, var(--tone) 45%, transparent);
+}
+
+.ne-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ne-swatches {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ne-swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--tone-paper);
+  border: 2px solid color-mix(in srgb, var(--tone) 55%, transparent);
+  transition: transform 0.25s var(--spring), box-shadow 0.2s;
+}
+
+.ne-swatch:hover {
+  transform: scale(1.1);
+}
+
+.ne-swatch[aria-checked='true'] {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--tone);
+}
+
+.ne-pin svg {
+  transition: transform 0.3s var(--spring);
+}
+
+.ne-pin[aria-pressed='true'] svg {
+  transform: rotate(-30deg);
+}
+
+.ne-hint {
+  font-size: 0.76rem;
+  margin-top: -4px;
+}
+
+.ne-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.ne-spacer {
+  flex: 1;
+}
+
+.ne-delete {
+  color: var(--c-coral-ink);
+}
+
+.ne-delete:hover,
+.ne-delete.is-confirm {
+  background: var(--c-coral-soft);
+}
+
+.ne-foot .btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (hover: none) {
+  .ne-hint { display: none; }
+}

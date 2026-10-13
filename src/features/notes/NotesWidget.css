@@ -1,0 +1,129 @@
+/* ---------- dashboard: Notlar ---------- */
+.nw {
+  display: flex;
+  flex-direction: column;
+  container-type: inline-size;
+  container-name: nw;
+}
+
+.nw-head {
+  margin-bottom: 10px;
+}
+
+.nw-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.nw-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nw-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.nw-all svg {
+  transition: transform 0.25s var(--spring);
+}
+
+.nw-all:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.nw-all:hover svg {
+  transform: translateX(3px);
+}
+
+.nw-add {
+  color: var(--text);
+}
+
+.nw-add:hover {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  transform: rotate(90deg);
+}
+
+.nw-row {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+  padding: 14px 4px 8px;
+}
+
+.nw-item {
+  display: flex;
+  min-width: 0;
+}
+
+.nw-item > .sticky {
+  flex: 1;
+  min-height: 150px;
+}
+
+
+.nw-empty {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  min-height: 150px;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--r);
+  color: var(--text-3);
+  font-size: 0.85rem;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.nw-empty .hand {
+  font-size: 1.5rem;
+  color: var(--text-2);
+}
+
+.nw-empty:hover {
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+
+/* narrow: horizontal snap-scroll row */
+@container nw (max-width: 520px) {
+  .nw-row {
+    display: flex;
+    gap: 14px;
+    margin: 0 -22px;
+    padding: 14px 22px 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 22px;
+    overscroll-behavior-x: contain;
+  }
+
+  .nw-item {
+    flex: 0 0 min(72%, 210px);
+    scroll-snap-align: start;
+  }
+}
