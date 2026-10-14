@@ -4,8 +4,8 @@ import { getAudioContext } from './audio';
 import { SOUNDSCAPES } from './ambient';
 
 const SOUNDS = [
-  { id: 'rain', name: 'Yağmur', hint: 'cama vuran damlalar', Icon: CloudRain, color: 'lavender' },
-  { id: 'cafe', name: 'Kafe uğultusu', hint: 'fincan şıngırtıları', Icon: Coffee, color: 'peach' },
+  { id: 'rain', name: 'Yağmur', hint: 'hafif yaz yağmuru', Icon: CloudRain, color: 'lavender' },
+  { id: 'cafe', name: 'Kafe uğultusu', hint: 'sohbet ve fincan sesleri', Icon: Coffee, color: 'peach' },
   { id: 'waves', name: 'Dalga', hint: 'kıyıya vuran deniz', Icon: Waves, color: 'blue' },
   { id: 'fireplace', name: 'Şömine', hint: 'çıtırdayan odunlar', Icon: Flame, color: 'coral' },
 ];
