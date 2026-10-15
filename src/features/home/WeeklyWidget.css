@@ -1,0 +1,224 @@
+/* ---------- dashboard: Bu Hafta ---------- */
+.wk {
+  display: flex;
+  flex-direction: column;
+  container-type: inline-size;
+  container-name: wk;
+}
+
+.wk-head {
+  margin-bottom: 12px;
+}
+
+.wk .card-title .wk-icon {
+  color: var(--c-sage);
+}
+
+.wk-range {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.wk-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.wk-main {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+}
+
+.wk-summary {
+  color: var(--text-2);
+  font-size: 0.98rem;
+}
+
+.wk-summary strong {
+  color: var(--text);
+  font-size: 1.12rem;
+  font-weight: 800;
+}
+
+.wk-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wk-bar {
+  flex: 1;
+  height: 12px;
+  border-radius: var(--r-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.wk-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--c-sage) 75%, var(--surface)), var(--c-sage));
+  transition: width 0.8s var(--ease);
+}
+
+.wk-pct {
+  font-weight: 700;
+  font-size: 0.95rem;
+  min-width: 3ch;
+  text-align: right;
+}
+
+/* mini column chart */
+.wk-chart {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  padding: 6px 2px 0;
+}
+
+.wk-col {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+
+.wk-col-track {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  max-width: 22px;
+  height: 58px;
+  border-radius: 7px;
+  background: var(--surface-2);
+}
+
+.wk-col-bar {
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--c-sage) 70%, var(--surface-2));
+  transition: height 0.7s var(--spring), background-color 0.2s;
+}
+
+.wk-col:hover .wk-col-bar {
+  background: var(--c-sage);
+}
+
+.wk-col-val {
+  height: 0.9rem;
+  margin-bottom: -2px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  line-height: 0.9rem;
+  color: var(--text-3);
+}
+
+.wk-col.is-today .wk-col-val {
+  color: var(--accent-ink);
+}
+
+.wk-col-label {
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--text-3);
+}
+
+.wk-col.is-today .wk-col-track {
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.wk-col.is-today .wk-col-bar {
+  background: var(--accent);
+}
+
+.wk-col.is-today .wk-col-label {
+  color: var(--accent-ink);
+  font-weight: 800;
+}
+
+.wk-col.is-future .wk-col-track {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+  opacity: 0.6;
+}
+
+.wk-focus {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  color: var(--text-2);
+}
+
+.wk-focus svg {
+  color: var(--accent);
+  flex: none;
+}
+
+.wk-focus strong {
+  color: var(--text);
+}
+
+/* handwritten quote */
+.wk-quote {
+  position: relative;
+  margin: 0;
+  padding: 12px 6px 4px;
+  border-top: 1.5px dashed var(--border-strong);
+  font-size: 1.32rem;
+  line-height: 1.2;
+  color: var(--text-2);
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+.wk-heart {
+  display: inline-block;
+  margin-left: 6px;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  animation: wk-beat 2.8s ease-in-out infinite;
+}
+
+@keyframes wk-beat {
+  0%, 70%, 100% { transform: scale(1); }
+  78% { transform: scale(1.25); }
+  86% { transform: scale(0.95); }
+}
+
+/* roomy: quote sits beside the stats, like a margin note */
+@container wk (min-width: 400px) {
+  .wk-body {
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .wk-main {
+    flex: 1;
+  }
+
+  .wk-quote {
+    flex: 0 0 34%;
+    padding: 6px 0 6px 18px;
+    border-top: 0;
+    border-left: 1.5px dashed var(--border-strong);
+    font-size: 1.5rem;
+    line-height: 1.25;
+    transform: rotate(-7deg);
+    transform-origin: center;
+  }
+}
