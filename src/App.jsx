@@ -1,122 +1,79 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import { AppProvider } from './store/AppStore';
+import { useApp } from './store/useApp';
+import { FocusTimerProvider } from './features/focus/FocusTimerProvider';
+import Sidebar, { MobileBar } from './features/shell/Sidebar';
+import Welcome from './features/shell/Welcome';
+import HeroScene from './features/home/HeroScene';
+import HabitStrip from './features/home/HabitStrip';
+import WeeklyWidget from './features/home/WeeklyWidget';
+import TodayTasks from './features/tasks/TodayTasks';
+import TasksPage from './features/tasks/TasksPage';
+import ArchivePage from './features/tasks/ArchivePage';
+import FocusWidget from './features/focus/FocusWidget';
+import FocusPage from './features/focus/FocusPage';
+import CalendarWidget from './features/calendar/CalendarWidget';
+import CalendarPage from './features/calendar/CalendarPage';
+import UpcomingWidget from './features/calendar/UpcomingWidget';
+import NotesWidget from './features/notes/NotesWidget';
+import NotesPage from './features/notes/NotesPage';
+import HabitsPage from './features/habits/HabitsPage';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function HomePage() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    <div className="dashboard">
+      <div className="area-hero rise"><HeroScene /></div>
+      <div className="area-focus rise" style={{ animationDelay: '60ms' }}><FocusWidget /></div>
+      <div className="area-strip rise" style={{ animationDelay: '90ms' }}><HabitStrip /></div>
+      <div className="area-cal rise" style={{ animationDelay: '120ms' }}><CalendarWidget /></div>
+      <div className="area-tasks rise" style={{ animationDelay: '150ms' }}><TodayTasks /></div>
+      <div className="area-week rise" style={{ animationDelay: '180ms' }}><WeeklyWidget /></div>
+      <div className="area-upcoming rise" style={{ animationDelay: '210ms' }}><UpcomingWidget /></div>
+      <div className="area-notes rise" style={{ animationDelay: '240ms' }}><NotesWidget /></div>
+    </div>
+  );
 }
 
-export default App
+const PAGES = {
+  home: HomePage,
+  tasks: TasksPage,
+  calendar: CalendarPage,
+  focus: FocusPage,
+  habits: HabitsPage,
+  notes: NotesPage,
+  archive: ArchivePage,
+};
+
+function Shell() {
+  const { view } = useApp();
+  // the mobile drawer belongs to the view it was opened on, so navigating closes it
+  const [navOpenOn, setNavOpenOn] = useState(null);
+  const navOpen = navOpenOn === view;
+  const Page = PAGES[view] || HomePage;
+
+  return (
+    <div className="app">
+      <Sidebar open={navOpen} onClose={() => setNavOpenOn(null)} />
+      <div className="app-main">
+        <MobileBar onMenu={() => setNavOpenOn(view)} />
+        <main className="page" key={view}>
+          <Page />
+        </main>
+      </div>
+      <Welcome />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <AppProvider>
+      <FocusTimerProvider>
+        <Shell />
+      </FocusTimerProvider>
+    </AppProvider>
+  );
+}
+
+export default App;
