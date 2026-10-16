@@ -59,7 +59,7 @@ Uygulama tamamen tarayıcıda çalışır, bir sunucuya ihtiyaç duymaz. Her kul
 - Sayfalar arasında geçiş yapıldığında ya da sayfa yenilendiğinde çalışmaya devam eden zamanlayıcı
 - Seans bitiminde tarayıcı bildirimi ve yumuşak bir çan sesi
 - Odaklanılan görevi seçme, günlük istatistikler ve 7 günlük odak grafiği
-- WebAudio API ile üretilen **ortam sesleri** (yağmur, kafe, dalga, şömine); hiçbir ses dosyası kullanılmaz
+- Gerçek saha kayıtlarından oluşan **ortam sesleri** (yağmur, kafe, dalga, şömine); her ses ayrı ayrı açılıp seviyesi ayarlanabilir ve kayıtlar kesintisiz döngüde çalar
 
 ### Takvim
 - Görevleri ve etkinlikleri gösteren ay görünümü
@@ -108,7 +108,7 @@ Uygulama tamamen tarayıcıda çalışır, bir sunucuya ihtiyaç duymaz. Her kul
 | Veri saklama | `localStorage` (React Context ile) |
 | Hava durumu | [Open-Meteo](https://open-meteo.com) API (anahtarsız) |
 | Konumdan şehir adı | [BigDataCloud](https://www.bigdatacloud.com) reverse geocoding (anahtarsız) |
-| Ses | Web Audio API |
+| Ses | Web Audio API; ortam sesleri için [Wikimedia Commons](https://commons.wikimedia.org) kayıtları ([kaynaklar](public/sounds/CREDITS.md)) |
 | Kod kalitesi | [oxlint](https://oxc.rs) |
 | Yayın | [Netlify](https://www.netlify.com) |
 
@@ -140,7 +140,8 @@ koza/
 ├── index.html              # HTML giriş noktası (yazı tipleri, tema)
 ├── netlify.toml            # Netlify derleme ayarları
 ├── public/
-│   └── favicon.svg         # Koza logosu
+│   ├── favicon.svg         # Koza logosu
+│   └── sounds/             # Ortam sesi kayıtları (mp3) ve CREDITS.md
 ├── docs/screenshots/       # README görselleri
 └── src/
     ├── main.jsx            # React giriş noktası
